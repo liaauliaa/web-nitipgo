@@ -34,6 +34,7 @@ import AdminDashboard from "./pages/dashboard/AdminDashboard";
 
 // Traveler Pages
 import NewTrip from "./pages/traveler/NewTrip";
+import TripManage from "./pages/traveler/TripManage";
 import TravelerWallet from "./pages/traveler/Wallet";
 
 // Admin Pages
@@ -107,6 +108,7 @@ const App = () => (
           {/* Traveler Dashboard */}
           <Route path="/traveler" element={<TravelerDashboard />} />
           <Route path="/traveler/trip/new" element={<NewTrip />} />
+          <Route path="/traveler/trip/:id/manage" element={<TripManage />} />
           <Route path="/traveler/wallet" element={<TravelerWallet />} />
           <Route path="/traveler/profile" element={<TravelerProfile />} />
           <Route path="/traveler/notifications" element={<TravelerNotifications />} />
