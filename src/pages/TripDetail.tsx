@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Star, MapPin, Calendar, Package, Shield, Clock, MessageSquare, CheckCircle, Phone, Mail, Send } from "lucide-react";
+import { ArrowLeft, ArrowRight, Star, MapPin, Calendar, Package, Shield, Clock, MessageSquare, CheckCircle, Phone, Mail, Send, LogIn } from "lucide-react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +13,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 // Mock trip data
 const mockTrips: Record<string, any> = {
@@ -123,7 +133,19 @@ export default function TripDetail() {
   const trip = mockTrips[id || ""] || defaultTrip;
   
   const [showContactDialog, setShowContactDialog] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Simulate auth check - in real app this would check actual auth state
+  const isLoggedIn = false;
+
+  const handleOrderClick = () => {
+    if (!isLoggedIn) {
+      setShowAuthDialog(true);
+    } else {
+      navigate(`/order/new?trip=${trip.id}`);
+    }
+  };
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -308,11 +330,9 @@ export default function TripDetail() {
                 </div>
 
                 <div className="space-y-3">
-                  <Button variant="hero" className="w-full" asChild>
-                    <Link to={`/order/new?trip=${trip.id}`}>
-                      <Package className="h-5 w-5 mr-2" />
-                      Ajukan Order
-                    </Link>
+                  <Button variant="hero" className="w-full" onClick={handleOrderClick}>
+                    <Package className="h-5 w-5 mr-2" />
+                    Ajukan Order
                   </Button>
                   <Button variant="outline" className="w-full" onClick={() => setShowContactDialog(true)}>
                     <MessageSquare className="h-5 w-5 mr-2" />
@@ -391,6 +411,31 @@ export default function TripDetail() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Auth Required Dialog */}
+      <AlertDialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <LogIn className="h-5 w-5 text-primary" />
+              Login Diperlukan
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Untuk mengajukan order, Anda harus login terlebih dahulu sebagai customer. 
+              Silakan login atau daftar untuk melanjutkan.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <Link to="/login">
+                <LogIn className="h-4 w-4 mr-2" />
+                Login Sekarang
+              </Link>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </MainLayout>
   );
 }

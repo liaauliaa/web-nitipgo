@@ -142,15 +142,15 @@ export default function AdminUsers() {
         >
           {filteredUsers.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full table-fixed">
                 <thead className="bg-muted/50">
                   <tr>
-                    <th className="text-left p-4 font-medium text-muted-foreground">User</th>
-                    <th className="text-left p-4 font-medium text-muted-foreground">Tipe</th>
-                    <th className="text-left p-4 font-medium text-muted-foreground">Status</th>
-                    <th className="text-left p-4 font-medium text-muted-foreground">Bergabung</th>
-                    <th className="text-left p-4 font-medium text-muted-foreground">Aktivitas</th>
-                    <th className="text-right p-4 font-medium text-muted-foreground">Aksi</th>
+                    <th className="text-left p-4 font-medium text-muted-foreground w-[22%]">User</th>
+                    <th className="text-left p-4 font-medium text-muted-foreground w-[12%]">Tipe</th>
+                    <th className="text-left p-4 font-medium text-muted-foreground w-[12%]">Status</th>
+                    <th className="text-left p-4 font-medium text-muted-foreground w-[14%]">Bergabung</th>
+                    <th className="text-left p-4 font-medium text-muted-foreground w-[12%]">Aktivitas</th>
+                    <th className="text-right p-4 font-medium text-muted-foreground w-[28%]">Aksi</th>
                   </tr>
                 </thead>
                 <motion.tbody
@@ -166,12 +166,12 @@ export default function AdminUsers() {
                     >
                       <td className="p-4">
                         <div>
-                          <p className="font-medium text-foreground">{user.name}</p>
-                          <p className="text-sm text-muted-foreground">{user.email}</p>
+                          <p className="font-medium text-foreground truncate">{user.name}</p>
+                          <p className="text-sm text-muted-foreground truncate">{user.email}</p>
                         </div>
                       </td>
                       <td className="p-4">
-                        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
                           user.type === "traveler" ? "bg-accent/20 text-accent" : "bg-primary/20 text-primary"
                         }`}>
                           {user.type === "traveler" && user.verified && <Shield className="h-3 w-3" />}
@@ -181,32 +181,32 @@ export default function AdminUsers() {
                       <td className="p-4">
                         <StatusBadge status={user.status} pulse={user.status === "pending"} size="sm" />
                       </td>
-                      <td className="p-4 text-sm text-muted-foreground">{user.joinDate}</td>
-                      <td className="p-4 text-sm text-foreground">
+                      <td className="p-4 text-sm text-muted-foreground whitespace-nowrap">{user.joinDate}</td>
+                      <td className="p-4 text-sm text-foreground whitespace-nowrap">
                         {user.type === "traveler" ? `${user.trips} trip` : `${user.orders} order`}
                       </td>
                       <td className="p-4">
-                        <div className="flex justify-end gap-2">
-                          <Button variant="ghost" size="sm" onClick={() => setSelectedUser(user)}>
+                        <div className="flex justify-end items-center gap-1 flex-wrap">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setSelectedUser(user)}>
                             <Eye className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm" onClick={() => handleEditClick(user)}>
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleEditClick(user)}>
                             <Pencil className="h-4 w-4" />
                           </Button>
                           {user.type === "traveler" && !user.verified && (
-                            <Button size="sm" onClick={() => handleAction("verify", user)}>
-                              <CheckCircle className="h-4 w-4 mr-1" />
+                            <Button size="sm" className="h-8 text-xs px-2" onClick={() => handleAction("verify", user)}>
+                              <CheckCircle className="h-3 w-3 mr-1" />
                               Verifikasi
                             </Button>
                           )}
                           {user.status === "active" && (
-                            <Button variant="outline" size="sm" onClick={() => handleAction("suspend", user)}>
-                              <Ban className="h-4 w-4 mr-1" />
+                            <Button variant="outline" size="sm" className="h-8 text-xs px-2" onClick={() => handleAction("suspend", user)}>
+                              <Ban className="h-3 w-3 mr-1" />
                               Suspend
                             </Button>
                           )}
                           {user.status === "cancelled" && (
-                            <Button variant="outline" size="sm" onClick={() => handleAction("activate", user)}>
+                            <Button variant="outline" size="sm" className="h-8 text-xs px-2" onClick={() => handleAction("activate", user)}>
                               Aktifkan
                             </Button>
                           )}

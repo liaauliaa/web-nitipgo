@@ -280,7 +280,7 @@ export default function AdminDashboard() {
                       <p className="text-xs text-muted-foreground">{order.item} • {order.date}</p>
                     </div>
                     <Button size="sm" asChild>
-                      <Link to="/admin/transactions">Review</Link>
+                      <Link to={`/admin/transactions?order=${order.id}&status=pending`}>Review</Link>
                     </Button>
                   </motion.div>
                 ))}

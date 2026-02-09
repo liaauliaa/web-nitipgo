@@ -223,7 +223,7 @@ export default function TravelerDashboard() {
                         <span className="font-medium text-foreground">{trip.orders}</span> order masuk
                       </span>
                       <Button variant="soft" size="sm" asChild>
-                        <Link to={`/traveler/trip/${trip.id}`}>Kelola</Link>
+                        <Link to={`/traveler/trip/${trip.id}/manage`}>Kelola</Link>
                       </Button>
                     </div>
                   </motion.div>
